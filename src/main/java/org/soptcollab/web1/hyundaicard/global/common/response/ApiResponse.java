@@ -1,4 +1,4 @@
-package org.soptcollab.web1.hyundaicard.responses;
+package org.soptcollab.web1.hyundaicard.global.common.response;
 
 public record ApiResponse<T>(
     String code,

@@ -1,4 +1,4 @@
-package org.soptcollab.web1.hyundaicard.util;
+package org.soptcollab.web1.hyundaicard.global.util;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
