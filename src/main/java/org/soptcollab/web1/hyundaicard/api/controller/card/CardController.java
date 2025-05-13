@@ -1,6 +1,6 @@
-package org.soptcollab.web1.hyundaicard.controller;
+package org.soptcollab.web1.hyundaicard.api.controller.card;
 
-import org.soptcollab.web1.hyundaicard.responses.ApiResponse;
+import org.soptcollab.web1.hyundaicard.global.common.response.ApiResponse;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
