@@ -1,6 +1,5 @@
-package org.soptcollab.web1.hyundaicard.repository;
+package org.soptcollab.web1.hyundaicard.domain.card;
 
-import org.soptcollab.web1.hyundaicard.domain.Card;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

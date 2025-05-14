@@ -1,7 +1,9 @@
-package org.soptcollab.web1.hyundaicard.exceptions;
+package org.soptcollab.web1.hyundaicard.global.common.enums;
 
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
+@Getter
 public enum ErrorCode {
 
   // 400번대 (Client Error)
@@ -32,15 +34,4 @@ public enum ErrorCode {
     this.message = message;
   }
 
-  public HttpStatus getStatus() {
-    return status;
-  }
-
-  public String getCode() {
-    return code;
-  }
-
-  public String getMessage() {
-    return message;
-  }
 }

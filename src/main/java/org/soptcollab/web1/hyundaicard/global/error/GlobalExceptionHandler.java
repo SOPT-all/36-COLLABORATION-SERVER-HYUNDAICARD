@@ -1,7 +1,9 @@
-package org.soptcollab.web1.hyundaicard.exceptions;
+package org.soptcollab.web1.hyundaicard.global.error;
 
-import org.soptcollab.web1.hyundaicard.responses.ApiResponse;
-import org.soptcollab.web1.hyundaicard.util.LoggingUtil;
+import org.soptcollab.web1.hyundaicard.global.error.exception.ApiException;
+import org.soptcollab.web1.hyundaicard.global.common.enums.ErrorCode;
+import org.soptcollab.web1.hyundaicard.global.common.response.ApiResponse;
+import org.soptcollab.web1.hyundaicard.global.util.LoggingUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

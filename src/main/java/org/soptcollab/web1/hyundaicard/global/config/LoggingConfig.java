@@ -1,7 +1,7 @@
-package org.soptcollab.web1.hyundaicard.config;
+package org.soptcollab.web1.hyundaicard.global.config;
 
-import org.soptcollab.web1.hyundaicard.util.LoggingUtil;
-import org.soptcollab.web1.hyundaicard.util.SystemPrintLoggingUtil;
+import org.soptcollab.web1.hyundaicard.global.util.LoggingUtil;
+import org.soptcollab.web1.hyundaicard.global.util.SystemPrintLoggingUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
