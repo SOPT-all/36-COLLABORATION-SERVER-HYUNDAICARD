@@ -19,10 +19,15 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
+    - name: Setup test application.yml file
+      run: |
+        mkdir -p ./src/main/resources
+        echo "${{ secrets.APPLICATION_YML_TEST }}" | base64 -d > ./src/main/resources/application-test.yml
+        
     - name: Setup Production application.yml file
       run: |
         mkdir -p ./src/main/resources
-        echo "${{ secrets.APPLICATION_YML_PROD }}" | base64 -d > ./src/main/resources/application.yml
+        echo "${{ secrets.APPLICATION_YML_PROD }}" | base64 -d > ./src/main/resources/application-prod.yml
 
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@417ae3ccd767c252f5661f1ace9f835f9654f2b5 # v3.1.0
@@ -65,7 +70,7 @@ jobs:
         fi
 
     - name: docker run new container
-      run: sudo docker run --rm -it -d -p 80:8080 --name spring-cicd-test ${{ secrets.DOCKERHUB_USERNAME }}/spring-cicd-test
+      run: sudo docker run --rm -it -d -p 80:8080 -e SPRING_PROFILES_ACTIVE=prod --name spring-cicd-test ${{ secrets.DOCKERHUB_USERNAME }}/spring-cicd-test
 
     - name: delete old docker image
       run: sudo docker system prune -f
