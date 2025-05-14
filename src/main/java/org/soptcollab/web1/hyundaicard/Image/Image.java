@@ -6,6 +6,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.soptcollab.web1.hyundaicard.global.common.entity.BaseEntity;
@@ -13,6 +15,7 @@ import org.soptcollab.web1.hyundaicard.global.common.entity.BaseEntity;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder @AllArgsConstructor
 public class Image extends BaseEntity {
 
   @Id @GeneratedValue(strategy = GenerationType.UUID)
