@@ -2,9 +2,10 @@ name: Java CI with Gradle
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "ci-cd" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "ci-cd" ]
+  workflow_dispatch:
 
 jobs:
   build-docker-image:
