@@ -1,7 +1,12 @@
 package org.soptcollab.web1.hyundaicard.infrastructure.init;
 
+import java.awt.image.BufferedImage;
+import java.net.URL;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.IntStream;
+import javax.imageio.ImageIO;
+import javax.xml.parsers.DocumentBuilderFactory;
 import lombok.RequiredArgsConstructor;
 import org.soptcollab.web1.hyundaicard.Image.Image;
 import org.soptcollab.web1.hyundaicard.Image.ImageRepository;
@@ -12,6 +17,8 @@ import org.soptcollab.web1.hyundaicard.domain.card.CardRepository;
 import org.soptcollab.web1.hyundaicard.domain.card.PaymentNetwork;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 @Configuration
 @RequiredArgsConstructor
@@ -33,16 +40,36 @@ public class CardImageDataLoader implements CommandLineRunner {
     // 2) Image 엔티티로 저장
     List<Image> images = urls.stream()
         .map(url -> {
-          String fileName = url.substring(url.lastIndexOf('/') + 1);
-          String extension = fileName.substring(fileName.lastIndexOf('.') + 1);
-          return Image.builder()
-              .url(url)
-              .extension(extension)
-              .width(300)
-              .height(180)
-              .build();
+          try {
+            String fileName = url.substring(url.lastIndexOf('/') + 1);
+            String extension = fileName.substring(fileName.lastIndexOf('.') + 1);
+
+            Document doc = DocumentBuilderFactory.newInstance()
+                .newDocumentBuilder()
+                .parse(new URL(url).openStream());
+
+            Element svgElement = doc.getDocumentElement();
+
+            String widthStr = svgElement.getAttribute("width");
+            String heightStr = svgElement.getAttribute("height");
+
+            int width = parseSvgSize(widthStr);
+            int height = parseSvgSize(heightStr);
+
+            return Image.builder()
+                .url(url)
+                .extension(extension)
+                .width(width)
+                .height(height)
+                .build();
+          } catch (Exception e) {
+            System.err.println("SVG 메타데이터 추출 실패: " + url);
+            return null;
+          }
         })
+        .filter(Objects::nonNull)
         .toList();
+
     imageRepository.saveAll(images);
 
     // 3) Brand, PaymentNetwork 순환 배열 준비
@@ -56,9 +83,8 @@ public class CardImageDataLoader implements CommandLineRunner {
 
           // URL에서 파일명 → displayName 생성
           String fileName = img.getUrl().substring(img.getUrl().lastIndexOf('/') + 1);
-          String base = fileName.replace("card_", "")
-              .replace("." + img.getExtension(), "");
-          String displayName = base.replace('_', ' ');
+          String displayName = fileName.replace("." + img.getExtension(), "");
+//          String displayName = base.replace('_', ' ');
 
           Brand brand = brands[idx % brands.length];
           PaymentNetwork network = networks[idx % networks.length];
@@ -78,6 +104,11 @@ public class CardImageDataLoader implements CommandLineRunner {
     cardRepository.saveAll(cards);
 
     System.out.println(">>> S3 기반 더미 Card & Image 로드 완료!");
+  }
+
+  private static int parseSvgSize(String sizeStr) {
+    if (sizeStr == null || sizeStr.isEmpty()) return 0;
+    return (int) Double.parseDouble(sizeStr.replaceAll("[^0-9.]", ""));
   }
 
 }
