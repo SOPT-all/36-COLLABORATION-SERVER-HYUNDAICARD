@@ -16,12 +16,10 @@ public class TagController {
   private final TagService tagService;
 
   @GetMapping("/tags")
-  public ResponseEntity<ApiResponse<List<TagResponseDto>>> getTags(){
+  public ResponseEntity<ApiResponse<List<TagResponseDto>>> getTags() {
 
     List<TagResponseDto> tagList = tagService.findAll();
+
     return ResponseEntity.ok(ApiResponse.success(tagList));
-
   }
-
-
 }

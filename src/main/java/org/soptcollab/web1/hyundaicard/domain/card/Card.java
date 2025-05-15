@@ -25,8 +25,6 @@ import org.soptcollab.web1.hyundaicard.global.common.entity.BaseEntity;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
-@Builder
 public class Card extends BaseEntity {
 
   @Id
@@ -49,13 +47,19 @@ public class Card extends BaseEntity {
   @Enumerated(EnumType.STRING)
   private Brand brand;
 
-
   private String benefits;
 
   private String buttonNote;
 
-
-
-
-
+  @Builder
+  public Card(final Image image, final String name, final PaymentNetwork paymentNetwork,
+      final Brand brand, final String benefits,
+      final String buttonNote) {
+    this.image = image;
+    this.name = name;
+    this.paymentNetwork = paymentNetwork;
+    this.brand = brand;
+    this.benefits = benefits;
+    this.buttonNote = buttonNote;
+  }
 }

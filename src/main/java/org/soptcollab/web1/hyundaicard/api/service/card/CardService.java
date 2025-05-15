@@ -15,11 +15,10 @@ public class CardService {
   private final CardRepository cardRepository;
 
   public List<CardResponseDto> findAll() {
+
     return cardRepository.findAll().stream()
         .limit(15) //15개까지만 조회
         .map(card -> CardResponseDto.from(card))
         .collect(Collectors.toList());
   }
-
-
 }

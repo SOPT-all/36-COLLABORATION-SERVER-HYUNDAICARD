@@ -1,4 +1,4 @@
-package org.soptcollab.web1.hyundaicard;
+package org.soptcollab.web1.hyundaicard.infrastructure.init;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;

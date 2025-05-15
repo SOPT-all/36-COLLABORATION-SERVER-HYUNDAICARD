@@ -7,7 +7,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +14,6 @@ import org.soptcollab.web1.hyundaicard.global.common.entity.BaseEntity;
 
 @Entity
 @Getter
-@Builder @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Tag extends BaseEntity {
 
@@ -33,6 +31,16 @@ public class Tag extends BaseEntity {
   private Integer displayOrder;
 
   private String hoverText; // 태그 호버시 나오는 메시지(ex. 온라인 쇼핑몰 결제시 추가 적립)
+
+  @Builder
+  public Tag(final String name, final String code, final Category category,
+      final Integer displayOrder, final String hoverText) {
+    this.name = name;
+    this.code = code;
+    this.category = category;
+    this.displayOrder = displayOrder;
+    this.hoverText = hoverText;
+  }
 
 
 }

@@ -18,12 +18,6 @@ public class CardController {
 
   private final CardService cardService;
 
-  @GetMapping("/card")
-  public ResponseEntity<ApiResponse<String>> test() {
-    return ResponseEntity.ok(ApiResponse.success("테스트"));
-  }
-
-
   /**
    * @return 메인페이지의 카드 개수가 15개인 것을 고려하여 15개의 카드 정보를 반환합니다.
    */
@@ -31,11 +25,9 @@ public class CardController {
   public ResponseEntity<ApiResponse<List<CardResponseDto>>> getCardList() {
 
     List<CardResponseDto> cards = cardService.findAll();
+
     return ResponseEntity.ok(ApiResponse.success(cards));
-
   }
-
-
 }
 
 

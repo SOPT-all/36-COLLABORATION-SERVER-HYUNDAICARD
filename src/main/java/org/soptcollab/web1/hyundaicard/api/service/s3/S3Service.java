@@ -105,16 +105,20 @@ public class S3Service {
 
   /**
    * 1) 단일 파일을 S3에서 가져오기
+   *
    * @param fileName S3에 저장된 전체 경로
    * @return S3Object (InputStream 등을 직접 사용 가능)
    */
   public S3Object getFile(String fileName) {
+
     log.info("Fetching file from S3: {}", fileName);
+
     return amazonS3.getObject(bucket, fileName);
   }
 
   /**
    * 2) 특정 디렉터리의 모든 파일 URL 목록 조회
+   *
    * @param dirName 폴더 경로
    * @return 접근 가능한 URL 리스트
    */
@@ -130,9 +134,6 @@ public class S3Service {
         .map(key -> amazonS3.getUrl(bucket, key).toString())
         .collect(Collectors.toList());
   }
-
-
-
 
 
 }

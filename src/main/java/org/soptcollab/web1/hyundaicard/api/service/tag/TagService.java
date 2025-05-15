@@ -13,12 +13,10 @@ public class TagService {
 
   private final TagRepository tagRepository;
 
-  public List<TagResponseDto> findAll(){
+  public List<TagResponseDto> findAll() {
+
     return tagRepository.findAll().stream()
         .map(tag -> TagResponseDto.from(tag))
         .collect(Collectors.toList());
-
   }
-
-
 }

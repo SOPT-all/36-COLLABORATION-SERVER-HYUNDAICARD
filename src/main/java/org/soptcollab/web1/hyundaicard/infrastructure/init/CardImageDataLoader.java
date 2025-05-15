@@ -1,7 +1,6 @@
-package org.soptcollab.web1.hyundaicard;
+package org.soptcollab.web1.hyundaicard.infrastructure.init;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import lombok.RequiredArgsConstructor;
 import org.soptcollab.web1.hyundaicard.Image.Image;
