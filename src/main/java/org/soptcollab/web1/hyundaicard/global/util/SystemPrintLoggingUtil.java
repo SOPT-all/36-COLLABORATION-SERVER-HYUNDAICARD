@@ -40,6 +40,6 @@ public class SystemPrintLoggingUtil implements LoggingUtil {
         .append("\n| stackTrace: ")
         .append(stackTraceElements[0]);
 
-    System.out.println(log);
+    System.err.println(log);
   }
 }
