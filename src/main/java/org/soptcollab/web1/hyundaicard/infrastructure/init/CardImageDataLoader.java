@@ -15,6 +15,7 @@ import org.soptcollab.web1.hyundaicard.domain.card.Brand;
 import org.soptcollab.web1.hyundaicard.domain.card.Card;
 import org.soptcollab.web1.hyundaicard.domain.card.CardRepository;
 import org.soptcollab.web1.hyundaicard.domain.card.PaymentNetwork;
+import org.soptcollab.web1.hyundaicard.global.util.LoggingUtil;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.w3c.dom.Document;
@@ -27,6 +28,7 @@ public class CardImageDataLoader implements CommandLineRunner {
   private final S3Service s3Service;
   private final ImageRepository imageRepository;
   private final CardRepository cardRepository;
+  private final LoggingUtil loggingUtil;
 
   @Override
   public void run(String... args) {
@@ -63,7 +65,8 @@ public class CardImageDataLoader implements CommandLineRunner {
                 .height(height)
                 .build();
           } catch (Exception e) {
-            System.err.println("SVG 메타데이터 추출 실패: " + url);
+            loggingUtil.error(e);
+            loggingUtil.info("SVG 메타데이터 추출 실패: " + url);
             return null;
           }
         })
@@ -103,7 +106,7 @@ public class CardImageDataLoader implements CommandLineRunner {
         .toList();
     cardRepository.saveAll(cards);
 
-    System.out.println(">>> S3 기반 더미 Card & Image 로드 완료!");
+    loggingUtil.info(">>> S3 기반 더미 Card & Image 로드 완료!");
   }
 
   private static int parseSvgSize(String sizeStr) {
