@@ -6,6 +6,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.soptcollab.web1.hyundaicard.global.common.entity.BaseEntity;
@@ -15,7 +17,8 @@ import org.soptcollab.web1.hyundaicard.global.common.entity.BaseEntity;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Image extends BaseEntity {
 
-  @Id @GeneratedValue(strategy = GenerationType.UUID)
+  @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
   @Column(name = "IMAGE_ID")
   public String id;
 
@@ -31,8 +34,12 @@ public class Image extends BaseEntity {
   // 이미지 높이
   public Integer height;
 
-
-
-
-
+  @Builder
+  public Image(final String url, final String extension, final Integer width,
+      final Integer height) {
+    this.url = url;
+    this.extension = extension;
+    this.width = width;
+    this.height = height;
+  }
 }
