@@ -15,10 +15,9 @@ public interface CardRepository extends JpaRepository<Card, String> {
   @Query(
       "select card as cardResult, count(card_tag.tag) as matched_tag_count"
           + " from Card card"
-          + "         join card.cardTags card_tag"
+          + "         left join card.cardTags card_tag on card_tag.tag.id in :tagIds"
           + "         join card.image image"
           + " where image.height > 200"
-          + "  and card_tag.tag.id in :tagIds"
           + " group by card"
           + " order by matched_tag_count desc"
           + " limit 1"
