@@ -2,8 +2,10 @@ package org.soptcollab.web1.hyundaicard.api.service.card;
 
 import jakarta.persistence.Tuple;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.soptcollab.web1.hyundaicard.api.service.card.dto.CardBrandGroupDto;
 import org.soptcollab.web1.hyundaicard.api.service.card.dto.CardResponseDto;
 import org.soptcollab.web1.hyundaicard.api.service.card.dto.CardSearchRequestDto;
 import org.soptcollab.web1.hyundaicard.api.service.card.dto.CardSearchResponseDto;
@@ -25,12 +27,20 @@ public class CardService {
   private final CardRepository cardRepository;
   private final TagRepository tagRepository;
 
-  public List<CardResponseDto> findAll() {
+  public List<CardBrandGroupDto> findUpTo15() {
 
-    return cardRepository.findAll().stream()
-        .limit(15) //15개까지만 조회
-        .map(card -> CardResponseDto.from(card))
-        .collect(Collectors.toList());
+    List<CardResponseDto> allCards = cardRepository.findAll().stream()
+        .limit(15) // 최대 15개까지만 조회
+        .map(CardResponseDto::from)
+        .toList();
+
+    // Car
+    Map<String, List<CardResponseDto>> groupedByBrand = allCards.stream()
+        .collect(Collectors.groupingBy(CardResponseDto::brand));
+
+    return groupedByBrand.entrySet().stream()
+        .map(entry -> new CardBrandGroupDto(entry.getKey(), entry.getValue()))
+        .toList();
   }
 
   /**
@@ -114,3 +124,8 @@ public class CardService {
   }
 
 }
+
+
+
+
+

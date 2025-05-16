@@ -3,6 +3,7 @@ package org.soptcollab.web1.hyundaicard.api.controller.card;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.soptcollab.web1.hyundaicard.api.service.card.CardService;
+import org.soptcollab.web1.hyundaicard.api.service.card.dto.CardBrandGroupDto;
 import org.soptcollab.web1.hyundaicard.api.service.card.dto.CardResponseDto;
 import org.soptcollab.web1.hyundaicard.api.service.card.dto.CardSearchRequestDto;
 import org.soptcollab.web1.hyundaicard.api.service.card.dto.CardSearchResponseDto;
@@ -25,9 +26,9 @@ public class CardController {
    * @return 메인페이지의 카드 개수가 15개인 것을 고려하여 15개의 카드 정보를 반환합니다.
    */
   @GetMapping
-  public ResponseEntity<ApiResponse<List<CardResponseDto>>> getCardList() {
+  public ResponseEntity<ApiResponse<List<CardBrandGroupDto>>> getCardList() {
 
-    List<CardResponseDto> cards = cardService.findAll();
+    List<CardBrandGroupDto> cards = cardService.findUpTo15();
 
     return ResponseEntity.ok(ApiResponse.success(cards));
   }
