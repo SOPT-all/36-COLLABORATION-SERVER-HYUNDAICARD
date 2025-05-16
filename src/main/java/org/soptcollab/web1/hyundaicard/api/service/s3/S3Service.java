@@ -131,6 +131,7 @@ public class S3Service {
     return result.getObjectSummaries()
         .stream()
         .map(S3ObjectSummary::getKey)
+        .filter(key -> !key.equals(dirName + "/"))
         .map(key -> amazonS3.getUrl(bucket, key).toString())
         .collect(Collectors.toList());
   }

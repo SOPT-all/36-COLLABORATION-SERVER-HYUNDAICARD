@@ -1,11 +1,9 @@
 package org.soptcollab.web1.hyundaicard.infrastructure.init;
 
-import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
-import javax.imageio.ImageIO;
 import javax.xml.parsers.DocumentBuilderFactory;
 import lombok.RequiredArgsConstructor;
 import org.soptcollab.web1.hyundaicard.Image.Image;
