@@ -7,7 +7,7 @@ public record CardSearchRequestDto(
 ) {
 
   public record Filters(
-      List<String> categories,
+      List<String> tagIds,
       AnnualFeeRange annualFeeRange
   ) {
 

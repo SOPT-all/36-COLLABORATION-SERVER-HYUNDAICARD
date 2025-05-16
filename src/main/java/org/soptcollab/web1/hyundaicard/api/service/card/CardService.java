@@ -52,7 +52,7 @@ public class CardService {
   public CardSearchResponseDto searchCards(
       final CardSearchRequestDto cardSearchRequestDto) {
 
-    List<String> tagIds = cardSearchRequestDto.filters().categories();
+    List<String> tagIds = cardSearchRequestDto.filters().tagIds();
 
     // 메인 카드는 이미지가 세로인 카드에서만 검색
     // 추천 카드는 이미지가 가로인 카드에서만 검색
