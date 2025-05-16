@@ -7,10 +7,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.soptcollab.web1.hyundaicard.Image.Image;
 import org.soptcollab.web1.hyundaicard.global.common.entity.BaseEntity;
 
 @Entity
+@Getter
+@NoArgsConstructor
 public class Post extends BaseEntity {
 
   @Id
