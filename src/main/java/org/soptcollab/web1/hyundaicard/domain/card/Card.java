@@ -32,7 +32,7 @@ public class Card extends BaseEntity {
   private String id;
 
   @OneToOne // 1대1 단방향. 일단, image 쪽에는 card 참조를 두지 않았음.
-  @JoinColumn(name = "IMAGE_ID") // Card 엔티티의 Image 가 fk 와 매핑
+  @JoinColumn(name = "image_id") // Card 엔티티의 Image 가 fk 와 매핑
   private Image image;
 
   @OneToMany(mappedBy = "card")
