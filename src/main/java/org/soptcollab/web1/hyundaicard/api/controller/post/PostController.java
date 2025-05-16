@@ -2,7 +2,6 @@ package org.soptcollab.web1.hyundaicard.api.controller.post;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.soptcollab.web1.hyundaicard.api.service.card.dto.CardBrandGroupDto;
 import org.soptcollab.web1.hyundaicard.api.service.post.PostService;
 import org.soptcollab.web1.hyundaicard.api.service.post.dto.PostResponseDto;
 import org.soptcollab.web1.hyundaicard.global.common.response.ApiResponse;
