@@ -1,5 +1,6 @@
 package org.soptcollab.web1.hyundaicard.domain.card;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -36,6 +37,7 @@ public class Card extends BaseEntity {
   private Image image;
 
   @OneToMany(mappedBy = "card")
+  @JsonIgnore
   private List<CardTag> cardTags = new ArrayList<>();
 
   @Column(name = "CARD_NAME")
