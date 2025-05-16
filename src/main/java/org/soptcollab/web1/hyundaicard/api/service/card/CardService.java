@@ -7,11 +7,14 @@ import lombok.RequiredArgsConstructor;
 import org.soptcollab.web1.hyundaicard.api.service.card.dto.CardResponseDto;
 import org.soptcollab.web1.hyundaicard.api.service.card.dto.CardSearchRequestDto;
 import org.soptcollab.web1.hyundaicard.api.service.card.dto.CardSearchResponseDto;
+import org.soptcollab.web1.hyundaicard.api.service.card.dto.CardSearchResponseDto.RecommendationCategoriesDto;
 import org.soptcollab.web1.hyundaicard.api.service.card.dto.CardSearchResponseDto.SearchedCardDto;
 import org.soptcollab.web1.hyundaicard.domain.card.Card;
 import org.soptcollab.web1.hyundaicard.domain.card.CardRepository;
 import org.soptcollab.web1.hyundaicard.global.common.enums.ErrorCode;
 import org.soptcollab.web1.hyundaicard.global.error.exception.ApiException;
+import org.soptcollab.web1.hyundaicard.tag.Tag;
+import org.soptcollab.web1.hyundaicard.tag.TagRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +23,7 @@ import org.springframework.stereotype.Service;
 public class CardService {
 
   private final CardRepository cardRepository;
+  private final TagRepository tagRepository;
 
   public List<CardResponseDto> findAll() {
 
@@ -39,13 +43,18 @@ public class CardService {
       final CardSearchRequestDto cardSearchRequestDto) {
 
     List<String> tagIds = cardSearchRequestDto.filters().categories();
+
     // 메인 카드는 이미지가 세로인 카드에서만 검색
-    Card mainCard = fetchMainCard(tagIds);
-
     // 추천 카드는 이미지가 가로인 카드에서만 검색
+    Card mainCard = fetchMainCard(tagIds);
     List<Card> recommendedCards = fetchRecommendedCards(tagIds);
+    List<Tag> selectedTags = fetchSelectedTag(tagIds);
 
-    return getCardSearchResponseDto(mainCard, recommendedCards);
+    return getCardSearchResponseDto(mainCard, selectedTags, recommendedCards);
+  }
+
+  private List<Tag> fetchSelectedTag(final List<String> tagIds) {
+    return tagRepository.findAllByIdIn(tagIds);
   }
 
 
@@ -79,19 +88,22 @@ public class CardService {
   }
 
   /**
-   *
-   * @param mainCard 메인카드
+   * @param mainCard         메인카드
    * @param recommendedCards 추천 카드
    * @return 응답 dto
    */
   private CardSearchResponseDto getCardSearchResponseDto(
       final Card mainCard,
+      final List<Tag> tags,
       final List<Card> recommendedCards
   ) {
 
     return CardSearchResponseDto.builder()
         .mainCard(
             SearchedCardDto.from(mainCard)
+        )
+        .recommendationCategoriesDto(
+            RecommendationCategoriesDto.from(tags)
         )
         .otherRecommendationCards(
             recommendedCards.stream()
