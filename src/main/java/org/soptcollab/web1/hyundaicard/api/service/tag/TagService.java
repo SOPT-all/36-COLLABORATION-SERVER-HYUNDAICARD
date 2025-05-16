@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.soptcollab.web1.hyundaicard.api.service.card.dto.CardBrandGroupDto;
+
 import org.soptcollab.web1.hyundaicard.api.service.card.dto.CardResponseDto;
 import org.soptcollab.web1.hyundaicard.api.service.tag.dto.TagCategoryGroupDto;
 import org.soptcollab.web1.hyundaicard.api.service.tag.dto.TagResponseDto;
