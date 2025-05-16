@@ -8,15 +8,17 @@ import org.soptcollab.web1.hyundaicard.api.service.tag.dto.TagResponseDto;
 import org.soptcollab.web1.hyundaicard.global.common.response.ApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/v1/tags")
 public class TagController {
 
   private final TagService tagService;
 
-  @GetMapping("/tags")
+  @GetMapping
   public ResponseEntity<ApiResponse<List<TagCategoryGroupDto>>> getTags() {
 
     List<TagCategoryGroupDto> tagList = tagService.findAll();
