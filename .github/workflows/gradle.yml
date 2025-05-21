@@ -66,10 +66,6 @@ jobs:
     - name: Create .env file
       run: echo "DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}" > .env
 
-    - name: Create Caddyfile
-      run: |
-        echo "${{ secrets.CADDYFILE }}" > Caddyfile
-
     - name: Docker Compose Up
       run: |
         sudo docker-compose pull
