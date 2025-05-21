@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   spring-app:
-    image: \${DOCKERHUB_USERNAME}/spring-cicd-test
+    image: ${DOCKERHUB_USERNAME}/spring-cicd-test
     container_name: spring-cicd-test
     environment:
       - SPRING_PROFILES_ACTIVE=prod
