@@ -66,39 +66,6 @@ jobs:
     - name: Create .env file
       run: echo "DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}" > .env
 
-    - name: Create docker-compose.yml
-      run: |
-        cat <<EOF > docker-compose.yml
-        version: '3.8'
-        services:
-          spring-app:
-            image: \${DOCKERHUB_USERNAME}/spring-cicd-test
-            container_name: spring-cicd-test
-            environment:
-              - SPRING_PROFILES_ACTIVE=prod
-            expose:
-              - "8080"
-            restart: always
-        
-          caddy:
-            image: caddy:2
-            container_name: caddy-server
-            restart: always
-            ports:
-              - "80:80"
-              - "443:443"
-            volumes:
-              - ./Caddyfile:/etc/caddy/Caddyfile
-              - caddy_data:/data
-              - caddy_config:/config
-            depends_on:
-              - spring-app
-        volumes:
-          caddy_data:
-          caddy_config:
-        EOF
-
-
     - name: Create Caddyfile
       run: |
         echo "${{ secrets.CADDYFILE }}" > Caddyfile
