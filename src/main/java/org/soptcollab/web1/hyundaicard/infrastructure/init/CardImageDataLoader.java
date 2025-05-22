@@ -2,7 +2,9 @@ package org.soptcollab.web1.hyundaicard.infrastructure.init;
 
 import java.net.URL;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
@@ -31,6 +33,29 @@ public class CardImageDataLoader implements CommandLineRunner {
 	private final ImageRepository imageRepository;
 	private final CardRepository cardRepository;
 	private final LoggingUtil loggingUtil;
+	private static final Map<String, String> CARD_NAME_MAP = new HashMap<>();
+	static {
+		CARD_NAME_MAP.put("card_red", "the Red");
+		CARD_NAME_MAP.put("card_green", "the Green Edition3");
+		CARD_NAME_MAP.put("card_pink", "the Pink Edition2");
+		CARD_NAME_MAP.put("card_summit", "Summit");
+		CARD_NAME_MAP.put("card_american_platinum", "American Express The Platinum Card Edition2");
+		CARD_NAME_MAP.put("card_american_gold", "American Express Gold Card Edition2");
+		CARD_NAME_MAP.put("card_american_green", "American Express Green Card Edition2");
+		CARD_NAME_MAP.put("card_naver", "네이버 현대카드 Edition 2");
+		CARD_NAME_MAP.put("card_emart", "이마트 e카드 Edition3");
+		CARD_NAME_MAP.put("card_olive", "올리브영 현대카드");
+		CARD_NAME_MAP.put("card_delivery", "배민현대카드II");
+		CARD_NAME_MAP.put("card_costco", "코스트코 리워드 현대카드");
+		CARD_NAME_MAP.put("card_korean_air", "대한항공카드 Edition 2");
+		CARD_NAME_MAP.put("card_korean_air-1", "대한항공카드 Edition 2");
+		CARD_NAME_MAP.put("card_musinsa", "무신사 현대카드");
+		CARD_NAME_MAP.put("card_musinsa-1", "무신사 현대카드");
+		CARD_NAME_MAP.put("card_gs", "에너지플러스카드 Edition3");
+		CARD_NAME_MAP.put("card_boutique_velvet", "현대카드 Boutique - Velvet");
+		CARD_NAME_MAP.put("card_ssg", "SSG.COM카드 Edition2");
+		CARD_NAME_MAP.put("card_hmall", "현대홈쇼핑 현대카드");
+	}
 
 	@Override
 	public void run(String... args) {
@@ -86,7 +111,7 @@ public class CardImageDataLoader implements CommandLineRunner {
 			.mapToObj(idx -> {
 				Image img = images.get(idx);
 				String fileName = img.getUrl().substring(img.getUrl().lastIndexOf('/') + 1);
-				String displayName = fileName.replace("." + img.getExtension(), "");
+				String displayName = getCardName(fileName.replace("." + img.getExtension(), ""));
 				String lowerName = displayName.toLowerCase();
 
 				// 브랜드 결정
@@ -121,6 +146,11 @@ public class CardImageDataLoader implements CommandLineRunner {
 		cardRepository.saveAll(cards);
 
 		loggingUtil.info(">>> S3 기반 더미 Card & Image 로드 완료!");
+	}
+
+	private String getCardName(final String replace) {
+
+		return CARD_NAME_MAP.getOrDefault(replace, "카드기본이름");
 	}
 
 	private boolean matchesAny(String target, String... keywords) {
