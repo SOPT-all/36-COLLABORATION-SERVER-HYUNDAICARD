@@ -9,6 +9,7 @@ import org.soptcollab.web1.hyundaicard.api.service.card.dto.CardResponseDto;
 import org.soptcollab.web1.hyundaicard.api.service.tag.dto.TagCategoryGroupDto;
 import org.soptcollab.web1.hyundaicard.api.service.tag.dto.TagResponseDto;
 import org.soptcollab.web1.hyundaicard.tag.TagRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,9 +20,11 @@ public class TagService {
 
   public List<TagCategoryGroupDto> findAll() {
 
-    List<TagResponseDto> allTags = tagRepository.findAll().stream()
-        .map(tag -> TagResponseDto.from(tag))
-        .collect(Collectors.toList());
+    List<TagResponseDto> allTags = tagRepository
+        .findAll(Sort.by(Sort.Direction.ASC, "displayOrder"))
+        .stream()
+        .map(TagResponseDto::from)
+        .toList();
 
     // Car
     Map<String, List<TagResponseDto>> groupedByCategory = allTags.stream()
